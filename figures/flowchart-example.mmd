@@ -1,0 +1,17 @@
+flowchart LR
+  A["Inventory & Roads"] --> S["State Assembler S_t"]
+  B["Fire Perimeters & Severity"] --> S
+  C["Salvageability & Grade Transitions"] --> S
+  D["Prices/Costs & Stumpage"] --> S
+
+  subgraph RH["Rolling Horizon (per t)"]
+    direction TB
+    S --> P1["ws3 Pre-fire Plan"]
+    P1 --> F["Fire Realization in t..t+Delta"]
+    F --> P2["Optional ws3 Post-fire (Problem)"]
+    F --> K["Contract Design (Stage 1)"]
+    P2 --> K
+    K --> R["Agent Executes (Rule-based Stage 2)"]
+    R --> P3["Optional ws3 Post-salvage (Mitigation)"]
+    P3 --> Snext["Roll Horizon to S_{t+1}"]
+  end
